@@ -1,5 +1,6 @@
 import { useParams } from "@solidjs/router";
 import { Show, createResource } from "solid-js";
+import { Spinner, SpinnerType } from "solid-spinner";
 
 const fetchProduct = async (id: string) => {
   const res = await fetch(`https://candy-shop-rest-api.onrender.com/products/${id}`);
@@ -16,7 +17,7 @@ export default function Product() {
 
   return (
     <div class="my-7">
-      <Show when={product()} fallback={<p>Loading product...</p>}>
+      <Show when={product()} fallback={<Spinner type={SpinnerType.hearts} stroke-opacity=".125" />}>
         <div class="grid grid-cols-5 gap-7">
           <div class="col-span-2">
             {/* Make sure to access the thumbnail within the data object */}

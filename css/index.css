@@ -27,12 +27,24 @@
 }
 
 body {
-  margin: 40px;
-  background: #ddd;
+  margin: 0px;
 }
 
 body {
   background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/*NAVBAR */
+.container-nav {
+  max-width: 1300px;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-brand {
+  height: 1.5rem;
+  font-weight: 700;
   color: var(--text-color);
 }
 

@@ -11,6 +11,7 @@ import { useParams } from "@solidjs/router";
 
 import { ParentProps } from "solid-js";
 import { IProduct, IProductResponse } from "../types/types";
+import { Spinner, SpinnerType } from "solid-spinner";
 
 interface CardProps {
   product?: IProduct;
@@ -67,7 +68,7 @@ export default function Home() {
 
   return (
     <div class="flex justify-center items-center min-h-screen">
-      <Show when={Array.isArray(products())} fallback={<p>Loading...</p>}>
+      <Show when={Array.isArray(products())} fallback={<Spinner type={SpinnerType.puff} stroke-opacity=".125" />}>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-4 w-full max-w-6xl">
           <For each={products()}>
             {(product: IProduct) => (
