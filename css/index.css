@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@75..125,700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.theme-light {
+  --bg-color: map-get($colors, "background");
+  --text-color: map-get($colors, "text");
+  --card-bg: map-get($colors, "card");
+}
+
+.theme-dark {
+  --bg-color: map-get($colors, "background");
+  --text-color: map-get($colors, "text");
+  --card-bg: map-get($colors, "card");
+}
+
+.theme-ocean {
+  --bg-color: map-get($colors, "background");
+  --text-color: map-get($colors, "text");
+  --card-bg: map-get($colors, "card");
+}
+
+.theme-sunset {
+  --bg-color: map-get($colors, "background");
+  --text-color: map-get($colors, "text");
+  --card-bg: map-get($colors, "card");
+}
+
+body {
+  margin: 40px;
+  background: #ddd;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.card, .modal {
+  background-color: var(--card-bg);
+}
+
+.btn {
+  @apply bg-amber-600
+    py-2 px-3 my-2
+    inline-block
+    text-white
+    rounded-md
+    border-2
+    border-amber-600;
+}
+
+/* global.css or equivalent */
+@media (max-width: 549px) {
+  .grid-cols-1-550px {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+.banner-text {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: 5rem;
+  line-height: 1;
+  display: inline-block;
+}
+.banner-text .word {
+  margin: 0 0.3em;
+}
+.banner-text .word span:nth-child(1) {
+  color: #FFC0CB;
+}
+.banner-text .word span:nth-child(2) {
+  color: #FFF200;
+}
+.banner-text .word span:nth-child(3) {
+  color: #98FF98;
+}
+.banner-text .word span:nth-child(4) {
+  color: #A1CAF1;
+}
+.banner-text .word span:nth-child(5) {
+  color: #E6E6FA;
+}/*# sourceMappingURL=index.css.map */
