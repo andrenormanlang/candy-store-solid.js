@@ -12,12 +12,17 @@ import { useParams } from "@solidjs/router";
 import { ParentProps } from "solid-js";
 import { IProduct, IProductResponse } from "../types/types";
 import { Spinner, SpinnerType } from "solid-spinner";
+import { useCartContext } from "../context/CartContext";
 
 interface CardProps {
   product?: IProduct;
   onClick?: (product: IProduct) => void;
   children?: JSX.Element;
   class?: string;
+}
+
+interface HomeProps {
+  addToCart: (product: IProduct) => void;
 }
 
 const Card = (props: ParentProps<CardProps>) => (
@@ -45,13 +50,14 @@ const fetchProduct = async (id: string) => {
   }
 };
 
-export default function Home() {
+export default function Home(props: HomeProps) {
   const [products] = createResource<IProduct[]>(fetchProducts);
   const [productId, setProductId] = createSignal();
   const [selectedProduct, setSelectedProduct] = createSignal<
     IProduct | undefined
   >();
   const params = useParams();
+  const { addToCart } = useCartContext();
 
   const [isModalOpen, setModalOpen] = createSignal(false);
 
@@ -68,7 +74,10 @@ export default function Home() {
 
   return (
     <div class="flex justify-center items-center min-h-screen">
-      <Show when={Array.isArray(products())} fallback={<Spinner type={SpinnerType.puff} stroke-opacity=".125" />}>
+      <Show
+        when={Array.isArray(products())}
+        fallback={<Spinner type={SpinnerType.puff} stroke-opacity=".125" />}
+      >
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-4 w-full max-w-6xl">
           <For each={products()}>
             {(product: IProduct) => (
@@ -97,9 +106,9 @@ export default function Home() {
       </Show>
 
       <Show when={isModalOpen()}>
-        <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+        <div class=" z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
           <div class="bg-white p-5 rounded-lg max-w-lg w-full">
-            <Show when={selectedProduct()}>
+            <Show when={selectedProduct() }>
               {(product) => (
                 <>
                   <h3 class="text-2xl font-bold mb-4">{product.name}</h3>
@@ -109,7 +118,14 @@ export default function Home() {
                     class="mb-4"
                   />
                   <p innerHTML={product().description} />
+                  <p class="my-7 text-2xl">{product().stock_quantity}</p>
                   <p class="my-7 text-2xl">Only £{product().price}</p>
+                  <button
+                    class="btn mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => addToCart(product() as IProduct)}
+                  >
+                    Add to Cart
+                  </button>
                   <button onClick={closeModal} class="btn mt-4">
                     Close
                   </button>

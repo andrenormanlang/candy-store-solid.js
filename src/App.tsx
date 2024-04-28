@@ -4,16 +4,23 @@ import Cart from "./pages/Cart";
 import Product from "./pages/Product";
 import { IoCartOutline } from "solid-icons/io";
 import { NavLink, Route, Routes } from "@solidjs/router";
+import { IProduct } from "./types/types";
+import CartDropdown from "./components/CartDropdown";
 
-
-const [cartItems, setCartItems] = createSignal([]);
 
 function App() {
   const [darkTheme, setDarkTheme] = createSignal(false);
+  const [cartItems, setCartItems] = createSignal<IProduct[]>([]);
 
   function toggleTheme() {
     setDarkTheme(!darkTheme());
   }
+
+  // Example function to add items to cart
+  function addToCart(item: IProduct) {
+    setCartItems([...cartItems(), item]);
+  }
+
 
   return (
     <>
@@ -22,7 +29,7 @@ function App() {
           darkTheme() ? "bg-neutral-900 text-white" : "bg-white text-black"
         }`}
       >
-        <header class="bg-red-600 sticky top-0 z-50 my-4 p-2 text-xl flex items-center justify-between">
+        <header class="bg-red-600 sticky top-0 z-10 my-4 p-2 text-xl flex items-center justify-between">
           <div>
             <div class="flex">
 
@@ -40,9 +47,14 @@ function App() {
           </div>
           <nav>
             {/* <NavLink href="/" end class="mx-2">Home</NavLink> */}
-            <NavLink href="/cart" class="mx-6 mr-6">
-              <IoCartOutline size={30} />
-            </NavLink>
+
+            <div class="mx-6 mt-5">
+              <CartDropdown />
+                <span class="mr-6 absolute  top-0 right-0 rounded-full bg-blue-500 text-white px-2 text-xs">
+                </span>
+
+            </div>
+
             {/* <NavLink href="/product" class="mx-2">Products</NavLink> */}
           </nav>
         </header>
@@ -65,8 +77,8 @@ function App() {
         </div>
 
         <Routes>
-          <Route path="/" component={Home} />
-          <Route path="/cart" component={Cart} />
+        <Route path="/" component={() => <Home addToCart={addToCart} />} />
+          <Route path="/" component={Cart} />
           <Route path="/product/:id" component={Product} />
         </Routes>
       </div>
